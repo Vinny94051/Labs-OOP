@@ -1,0 +1,269 @@
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+class Array
+{
+private:
+	int array_size;
+	int *array = new int[array_size];
+	bool CheckNotNull();
+	int SearchMinPos();
+	int SearchMaxPos();
+	int SearchMinModulPos();
+	int SearchMaxModulPos();
+	void deleteElemnt(int a);
+public:
+	Array(int array_size);
+	~Array();
+
+	void Set();
+	void Print();
+	int Run1();
+	int Run2();
+	int Run3();
+	int Run4();
+	int Run5();
+	int Run6();
+	void Run7(int a, int b);
+	void Run8(int a, int b);
+};
+void Array::deleteElemnt(int a) {
+	for (int i = a; i < array_size-1; i++)
+	{
+		swap(array[i], array[i + 1]);
+		array_size--;
+	}
+
+}
+
+void Array::Run8(int a, int b) { //TODO does not work, fix it
+	if (CheckNotNull()) return;
+	if (a > b) swap(a, b);
+
+	for (int i = 0; i < array_size; i++)
+	{
+		if (array[i] >= a && array[i] <= b) {
+			deleteElemnt(i);
+		}
+	}
+}
+void Array::Run7(int a, int b) {
+	if (CheckNotNull()) return;
+	if (a > b) swap(a, b);
+
+	int *newArray = new int[array_size];
+	int newArrayCounter = 0;
+	for (int i = 0; i < array_size; i++)
+	{
+		if (array[i] >= a && array[i] <= b) {
+			newArray[newArrayCounter] = array[i];
+			newArrayCounter++;
+		}
+	}
+
+	for (int i = 0; i < array_size; i++)
+	{
+		if (array[i] <= a || array[i] >= b) {
+			newArray[newArrayCounter] = array[i];
+			newArrayCounter++;
+		}
+	}
+
+	this->array = newArray;
+}
+int Array::Run6() {
+	if (CheckNotNull()) {
+		return 1;
+	}
+	bool flag = false;
+	int rezult = 0;
+
+	for (int i = 0; i < array_size; i++)
+	{
+		if (array[i] > 0 && !flag) flag = true;
+		if (flag) rezult += array[i];
+	}
+	return rezult;
+}
+
+int Array::Run5() {
+	if (CheckNotNull()) {
+		return 1;
+	}
+
+	int rezult = 0;
+	for (int i = 0; i < SearchMaxPos(); i++)
+	{
+		rezult += array[i];
+	}
+	return rezult;
+}
+int Array::Run4() {
+	if (CheckNotNull()) {
+		return 1;
+	}
+	int rezult = 0;
+
+	for (int i = SearchMinModulPos(); i < array_size; i++)
+	{
+		rezult += abs(array[i]);
+	}
+	return rezult;
+
+}
+
+int Array::Run3() {
+	if (CheckNotNull()) {
+		return 1;
+	}
+
+	int rezult = 0;
+
+	for (int i = SearchMinPos(); i < array_size; i++)
+	{
+		rezult += array[i];
+	}
+	return rezult;
+}
+
+int Array::SearchMaxModulPos() {
+	if (CheckNotNull()) {
+		return 1;
+	}
+
+	int maxPosition = 0, max = 0;
+	for (int i = 0; i < array_size; i++)
+	{
+		if (abs(array[i]) > abs(max)) {
+			maxPosition = i;
+			max = array[i];
+		}
+	}
+	return maxPosition;
+}
+
+int Array::SearchMinModulPos() {
+	if (CheckNotNull()) {
+		return 1;
+	}
+
+	int maxPosition = 0, max = 100000;
+	for (int i = 0; i < array_size; i++)
+	{
+		if (abs(array[i]) > abs(max)) {
+			maxPosition = i;
+			max = array[i];
+		}
+	}
+	return maxPosition;
+}
+int Array::Run2() {
+	int rezult = 1;
+	if (SearchMinModulPos() > SearchMaxModulPos()) {
+		for (int i = SearchMaxModulPos(); i <= SearchMinModulPos(); i++)
+		{
+			rezult *= array[i];
+		}
+	}
+	else {
+		for (int i = SearchMinModulPos(); i < SearchMaxModulPos(); i++)
+		{
+			rezult *= array[i];
+		}
+	}
+	return rezult;
+}
+
+int Array::Run1() {
+	int rezult = 1;
+	if (SearchMinPos() > SearchMaxPos()) {
+		for (int i = SearchMaxPos(); i <= SearchMinPos(); i++)
+		{
+			rezult *= array[i];
+		}
+	}
+	else {
+		for (int i = SearchMinPos(); i < SearchMaxPos(); i++)
+		{
+			rezult *= array[i];
+		}
+	}
+	return rezult;
+}
+
+int Array::SearchMinPos() {
+	if (CheckNotNull()) {
+		return 1;
+	}
+
+	int minPosition = 0, min = 10000;
+	for (int i = 0; i < array_size; i++)
+	{
+		if (array[i] < min) {
+			minPosition = i;
+			min = array[i];
+		}
+	}
+	return minPosition;
+}
+
+
+int Array::SearchMaxPos() {
+	if (CheckNotNull()) {
+		return 1;
+	}
+
+	int maxPosition = 0, max = 0;
+	for (int i = 0; i < array_size; i++)
+	{
+		if (array[i] > max) {
+			maxPosition = i;
+			max = array[i];
+		}
+	}
+	return maxPosition;
+}
+
+
+bool Array::CheckNotNull() {
+	return  array_size <= 0 ? false : true;
+}
+
+void Array::Set() {
+
+	for (int i = 0; i < array_size; i++)
+	{
+		cout << "Enter the " << i << "st elemnt : " << endl;
+		cin >> array[i];
+	}
+}
+
+void Array::Print() {
+	if (CheckNotNull()) {
+		return;
+	}
+	for (int i = 0; i < array_size; i++)
+	{
+		cout << array[i] << " ";
+	}
+	cout << endl;
+}
+Array::Array(int array_size)
+{
+	this->array_size = array_size;
+	
+}
+
+Array ::~Array()
+{
+	cout << "deleting" << endl;
+//	delete this;
+}
+
+int main() {
+
+	system("pause");
+	return 0;
+}
