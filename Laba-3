@@ -6,18 +6,18 @@ using namespace std;
 class Array
 {
 private:
-	int array_size;
-	int *array = new int[array_size];
 	bool CheckNotNull();
 	int SearchMinPos();
 	int SearchMaxPos();
 	int SearchMinModulPos();
 	int SearchMaxModulPos();
-	void deleteElemnt(int a);
+	void deleteOne(int number);
 public:
+	int array_size;
+	int *array = new int[array_size];
 	Array(int array_size);
 	~Array();
-
+	
 	void Set();
 	void Print();
 	int Run1();
@@ -27,26 +27,24 @@ public:
 	int Run5();
 	int Run6();
 	void Run7(int a, int b);
-	void Run8(int a, int b);
+	void Run8( int a, int b);
 };
-int deleteOne(int *a,int size,int number) {
-	for (int i = number; i < size; i++)
+void Array::deleteOne(int number) {
+	for (int i = number; i < array_size; i++)
 	{
-		a[i] = a[i + 1];
+		array[i] = array[i + 1];
 	}
-	return size-1;
+	--array_size;
 }
 
-int deleteFromAtoB(int *ar, int a,int b,int size) {
-	int dynamicSize = size,counter = 0;
-	for (int i = 0; i < dynamicSize; i++)
+void Array:: Run8( int a, int b) {
+	for (int i = 0; i < array_size; i++)
 	{
-		if (ar[i] > a && ar[i] < b) {
-			dynamicSize = deleteOne(ar, size, i);
-			counter++;
+		if (array[i] > a && array[i] < b) {
+			 deleteOne(i);		
+			 i = 0;
 		}
 	}
-	return dynamicSize-counter+1;
 }
 void Array::Run7(int a, int b) {
 	if (CheckNotNull()) return;
@@ -69,8 +67,10 @@ void Array::Run7(int a, int b) {
 			newArrayCounter++;
 		}
 	}
-
-	this->array = newArray;
+	for (int i = 0; i < array_size; i++)
+	{
+		array[i] = newArray[i];
+	}
 }
 int Array::Run6() {
 	if (CheckNotNull()) {
@@ -227,22 +227,22 @@ int Array::SearchMaxPos() {
 
 
 bool Array::CheckNotNull() {
-	return  array_size <= 0 ? false : true;
+	return  array_size <= 0 ? true : false;
 }
 
 void Array::Set() {
+		for (int i = 0; i < array_size; i++)
+		{
+			cout << "Enter the " << i << "st elemnt : " << endl;
+			cin >> array[i];
+		}
 
-	for (int i = 0; i < array_size; i++)
-	{
-		cout << "Enter the " << i << "st elemnt : " << endl;
-		cin >> array[i];
-	}
 }
 
 void Array::Print() {
 	if (CheckNotNull()) {
 		return;
-	}
+}
 	for (int i = 0; i < array_size; i++)
 	{
 		cout << array[i] << " ";
@@ -252,17 +252,36 @@ void Array::Print() {
 Array::Array(int array_size)
 {
 	this->array_size = array_size;
-	
+
 }
 
 Array ::~Array()
 {
 	cout << "deleting" << endl;
-//	delete this;
 }
 
 int main() {
 
+	Array ar(6);
+	ar.Set();
+	ar.Print();
+	cout << "Run 1 : " << ar.Run1() << endl;
+	cout << "Run 2 : " << ar.Run2() << endl;
+	cout << "Run 3 : " << ar.Run3() << endl;
+	cout << "Run 4 : " << ar.Run4() << endl;
+	cout << "Run 5 : " << ar.Run5() << endl;
+	cout << "Run 6 : " << ar.Run6() << endl;
+
+	int a, b;
+	cout << "Enter your range : " << endl;
+	cin >> a >> b;
+	if (a > b) {
+		swap(a, b);
+	}
+	ar.Run7(a,b);
+	ar.Print();
+    ar.Run8(a, b);
+	ar.Print();
 	system("pause");
 	return 0;
 }
