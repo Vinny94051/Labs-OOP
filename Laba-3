@@ -29,25 +29,24 @@ public:
 	void Run7(int a, int b);
 	void Run8(int a, int b);
 };
-void Array::deleteElemnt(int a) {
-	for (int i = a; i < array_size-1; i++)
+int deleteOne(int *a,int size,int number) {
+	for (int i = number; i < size; i++)
 	{
-		swap(array[i], array[i + 1]);
-		array_size--;
+		a[i] = a[i + 1];
 	}
-
+	return size-1;
 }
 
-void Array::Run8(int a, int b) { //TODO does not work, fix it
-	if (CheckNotNull()) return;
-	if (a > b) swap(a, b);
-
-	for (int i = 0; i < array_size; i++)
+int deleteFromAtoB(int *ar, int a,int b,int size) {
+	int dynamicSize = size,counter = 0;
+	for (int i = 0; i < dynamicSize; i++)
 	{
-		if (array[i] >= a && array[i] <= b) {
-			deleteElemnt(i);
+		if (ar[i] > a && ar[i] < b) {
+			dynamicSize = deleteOne(ar, size, i);
+			counter++;
 		}
 	}
+	return dynamicSize-counter+1;
 }
 void Array::Run7(int a, int b) {
 	if (CheckNotNull()) return;
