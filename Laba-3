@@ -6,7 +6,6 @@ using namespace std;
 class Array
 {
 private:
-	bool CheckNotNull();
 	int SearchMinPos();
 	int SearchMaxPos();
 	int SearchMinModulPos();
@@ -17,7 +16,7 @@ public:
 	int *array = new int[array_size];
 	Array(int array_size);
 	~Array();
-	
+
 	void Set();
 	void Print();
 	int Run1();
@@ -27,7 +26,7 @@ public:
 	int Run5();
 	int Run6();
 	void Run7(int a, int b);
-	void Run8( int a, int b);
+	void Run8(int a, int b);
 };
 void Array::deleteOne(int number) {
 	for (int i = number; i < array_size; i++)
@@ -37,17 +36,16 @@ void Array::deleteOne(int number) {
 	--array_size;
 }
 
-void Array:: Run8( int a, int b) {
+void Array::Run8(int a, int b) {
 	for (int i = 0; i < array_size; i++)
 	{
 		if (array[i] > a && array[i] < b) {
-			 deleteOne(i);		
-			 i = 0;
+			deleteOne(i);
+			i = 0;
 		}
 	}
 }
 void Array::Run7(int a, int b) {
-	if (CheckNotNull()) return;
 	if (a > b) swap(a, b);
 
 	int *newArray = new int[array_size];
@@ -73,36 +71,35 @@ void Array::Run7(int a, int b) {
 	}
 }
 int Array::Run6() {
-	if (CheckNotNull()) {
-		return 1;
-	}
 	bool flag = false;
 	int rezult = 0;
+	bool first = true;
 
 	for (int i = 0; i < array_size; i++)
 	{
-		if (array[i] > 0 && !flag) flag = true;
+		if (array[i] > 0 && !flag)
+		{
+			if (first) {
+				first = false;
+			}
+			else {
+				flag = true;
+			}
+		}
 		if (flag) rezult += array[i];
 	}
 	return rezult;
 }
 
 int Array::Run5() {
-	if (CheckNotNull()) {
-		return 1;
-	}
-
 	int rezult = 0;
-	for (int i = 0; i < SearchMaxPos(); i++)
+	for (int i = SearchMaxPos(); i < array_size; i++)
 	{
 		rezult += array[i];
 	}
 	return rezult;
 }
 int Array::Run4() {
-	if (CheckNotNull()) {
-		return 1;
-	}
 	int rezult = 0;
 
 	for (int i = SearchMinModulPos(); i < array_size; i++)
@@ -114,13 +111,9 @@ int Array::Run4() {
 }
 
 int Array::Run3() {
-	if (CheckNotNull()) {
-		return 1;
-	}
-
 	int rezult = 0;
 
-	for (int i = SearchMinPos(); i < array_size; i++)
+	for (int i = SearchMinPos() + 1; i < array_size; i++)
 	{
 		rezult += array[i];
 	}
@@ -128,14 +121,10 @@ int Array::Run3() {
 }
 
 int Array::SearchMaxModulPos() {
-	if (CheckNotNull()) {
-		return 1;
-	}
-
-	int maxPosition = 0, max = 0;
+	int maxPosition = 0, max = INT16_MIN;
 	for (int i = 0; i < array_size; i++)
 	{
-		if (abs(array[i]) > abs(max)) {
+		if (abs(array[i]) > max) {
 			maxPosition = i;
 			max = array[i];
 		}
@@ -144,30 +133,26 @@ int Array::SearchMaxModulPos() {
 }
 
 int Array::SearchMinModulPos() {
-	if (CheckNotNull()) {
-		return 1;
-	}
-
-	int maxPosition = 0, max = 100000;
+	int minPosition = 0, min = INT16_MAX;
 	for (int i = 0; i < array_size; i++)
 	{
-		if (abs(array[i]) > abs(max)) {
-			maxPosition = i;
-			max = array[i];
+		if (abs(array[i]) < min) {
+			minPosition = i;
+			min = array[i];
 		}
 	}
-	return maxPosition;
+	return minPosition;
 }
 int Array::Run2() {
 	int rezult = 1;
 	if (SearchMinModulPos() > SearchMaxModulPos()) {
-		for (int i = SearchMaxModulPos(); i <= SearchMinModulPos(); i++)
+		for (int i = SearchMaxModulPos() + 1; i < SearchMinModulPos(); i++)
 		{
 			rezult *= array[i];
 		}
 	}
 	else {
-		for (int i = SearchMinModulPos(); i < SearchMaxModulPos(); i++)
+		for (int i = SearchMinModulPos() + 1; i < SearchMaxModulPos(); i++)
 		{
 			rezult *= array[i];
 		}
@@ -178,13 +163,13 @@ int Array::Run2() {
 int Array::Run1() {
 	int rezult = 1;
 	if (SearchMinPos() > SearchMaxPos()) {
-		for (int i = SearchMaxPos(); i <= SearchMinPos(); i++)
+		for (int i = SearchMaxPos() + 1; i < SearchMinPos(); i++)
 		{
 			rezult *= array[i];
 		}
 	}
 	else {
-		for (int i = SearchMinPos(); i < SearchMaxPos(); i++)
+		for (int i = SearchMinPos() + 1; i < SearchMaxPos(); i++)
 		{
 			rezult *= array[i];
 		}
@@ -193,10 +178,6 @@ int Array::Run1() {
 }
 
 int Array::SearchMinPos() {
-	if (CheckNotNull()) {
-		return 1;
-	}
-
 	int minPosition = 0, min = 10000;
 	for (int i = 0; i < array_size; i++)
 	{
@@ -210,10 +191,6 @@ int Array::SearchMinPos() {
 
 
 int Array::SearchMaxPos() {
-	if (CheckNotNull()) {
-		return 1;
-	}
-
 	int maxPosition = 0, max = 0;
 	for (int i = 0; i < array_size; i++)
 	{
@@ -225,24 +202,16 @@ int Array::SearchMaxPos() {
 	return maxPosition;
 }
 
-
-bool Array::CheckNotNull() {
-	return  array_size <= 0 ? true : false;
-}
-
 void Array::Set() {
-		for (int i = 0; i < array_size; i++)
-		{
-			cout << "Enter the " << i << "st elemnt : " << endl;
-			cin >> array[i];
-		}
+	for (int i = 0; i < array_size; i++)
+	{
+		cout << "Enter the " << i << "st elemnt : " << endl;
+		cin >> array[i];
+	}
 
 }
 
 void Array::Print() {
-	if (CheckNotNull()) {
-		return;
-}
 	for (int i = 0; i < array_size; i++)
 	{
 		cout << array[i] << " ";
@@ -278,9 +247,9 @@ int main() {
 	if (a > b) {
 		swap(a, b);
 	}
-	ar.Run7(a,b);
+	ar.Run7(a, b);
 	ar.Print();
-    ar.Run8(a, b);
+	ar.Run8(a, b);
 	ar.Print();
 	system("pause");
 	return 0;
