@@ -27,7 +27,7 @@ public:
 	friend void arrayInicializacing(Array &array); //Friend function
 	void print();
 	void set(int i, int j, int new_value);
-	
+	void arrayNoConstantInicialize();
 
 	//Different solutions
 	void elementSumInPositiveStrings();
@@ -76,12 +76,18 @@ int main() {
 
 	array.searchStringWithMinimalyOnePositiveElement();	//Task 6
 
+	//==============================================================================================
+
+	cout << "Now i create new matrix." << endl;
 	double valueForComparing;								//This variable is for comparing with it
 	cout << "Enter the value for comparing : " << endl;		//arithmetic average modules of array strings.
 	cin >> valueForComparing;
 
-	array.compareToMiddleStringValue(valueForComparing);	//Task 7
-	array.sumElementsModuleHigherMainDiag();	//Task 8
+	Array *ptrarray = new Array(3, 3);	//New not constant object for last tasks
+	ptrarray->arrayNoConstantInicialize();
+	ptrarray->print();
+	ptrarray->compareToMiddleStringValue(valueForComparing);	//Task 7
+	ptrarray->sumElementsModuleHigherMainDiag();	//Task 8
 
 	system("pause");
 	return 0;
@@ -153,6 +159,25 @@ void Array::print()
 void Array::set(int i, int j, int new_value)
 {
 	matrix[i][j] = new_value;
+}
+
+void Array::arrayNoConstantInicialize()
+{
+	matrix = new double*[x];
+	for (int i = 0; i < y; i++)
+	{
+		for (int j = 0; j < x; j++)
+		{
+			matrix[i] = new double[y];
+		}
+	}
+
+	for (int i = 0; i < y; i++)
+	{
+		for (int j = 0; j < x; j++) {
+			matrix[i][j] = rand() % 101 - 30;
+		}
+	}
 }
 
 void Array::elementSumInPositiveStrings()
