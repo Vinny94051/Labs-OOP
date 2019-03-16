@@ -20,7 +20,11 @@ public:
 	}
 
 	~Array() {
-		delete matrix;
+		for (int i = 0; i < x; i++)
+		{
+			delete matrix[i];
+		}
+		cout << "Successfully deleted" << endl;
 	}
 
 	//Standart methods
@@ -78,7 +82,7 @@ int main() {
 	array.print();
 
 	array.searchStringWithMinimalyOnePositiveElement();	//Task 6
-	DeleteArray(array);
+
 	//==============================================================================================
 
 	cout << "Now i create new matrix." << endl;
@@ -91,10 +95,10 @@ int main() {
 	ptrarray->print();
 	ptrarray->compareToMiddleStringValue(valueForComparing);	//Task 7
 	ptrarray->sumElementsModuleHigherMainDiag();	//Task 8
-	ptrarray->DeleteNotConstantArray();
 
 	system("pause");
 	return 0;
+	system("pause");
 }
 
 int Array::elementSumInPositiveString(int stringNumber)
