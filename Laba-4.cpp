@@ -27,7 +27,7 @@ public:
 		cout << "Successfully deleted" << endl;
 	}
 
-	//Standart methods
+	//Standard methods
 	friend void arrayInicializacing(Array &array); //Friend function
 	double sumElementsModuleHigherMainDiag();
 	void print();
@@ -40,7 +40,7 @@ public:
 	void elementSumInPositiveStrings();
 	int stringWithZeroNumber();
 	int searchNegativeString();
-	int searchNegativeColumn();
+	int searchPositiveColumn();
 	int searchColumnWithMinimalyOnePositiveElement();
 	int searchStringWithMinimalyOnePositiveElement();
 	int compareToMiddleStringValue(double value);
@@ -71,12 +71,12 @@ int main() {
 											
 	for (int j = 0; j < array.x; j++) //Set -4 instead of second column
 	{
-		array.set(j, 2, -4);
+		array.set(j, 2, 4);
 	}
 
 	array.print();
 	
-	array.searchNegativeColumn();	//Task 4
+	array.searchPositiveColumn();	//Task 4
 	array.searchColumnWithMinimalyOnePositiveElement();	//Task 5
 
 	array.print();
@@ -256,18 +256,18 @@ int Array::searchNegativeString()
 	return 0;
 }
 
-int Array::searchNegativeColumn()
+int Array::searchPositiveColumn()
 {
-	bool isNegative;
+	bool isPositive;
 	for (int i = 0; i < y; i++)
 	{
-		isNegative = true;
+		isPositive = true;
 		for (int j = 0; j < x; j++)
 		{
-			if (matrix[j][i] > 0) isNegative = false;
+			if (matrix[j][i] < 0) isPositive = false;
 		}
-		if (isNegative) {
-			cout << "Column number " << (i+1) << " consist of only negative numbers.";
+		if (isPositive) {
+			cout << "Column number " << (i+1) << " consist of only positive numbers.";
 			cout << "\n";
 			return i;
 		}
