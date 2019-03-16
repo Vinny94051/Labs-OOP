@@ -24,7 +24,7 @@ public:
 	}
 
 	//Standart methods
-	void arrayInicializacing();
+	friend void arrayInicializacing(Array &array); //Friend function
 	void print();
 	void set(int i, int j, int new_value);
 	
@@ -44,7 +44,7 @@ int main() {
 	srand(time(NULL));	//Not the constantly random
 	Array array(5, 5);
 
-	array.arrayInicializacing();
+	arrayInicializacing(array);
 	array.print();
 	
 	array.elementSumInPositiveStrings();	//Task 1
@@ -113,21 +113,21 @@ double Array::middleStringValue(int stringNumber)
 	return middleValue / x;
 }
 
-void Array::arrayInicializacing()
+void arrayInicializacing(Array &array)
 {
-	matrix = new double*[x];
-	for (int i = 0; i < y; i++)
+	array.matrix = new double*[array.x];
+	for (int i = 0; i < array.y; i++)
 	{
-		for (int j = 0; j < x; j++)
+		for (int j = 0; j < array.x; j++)
 		{
-			matrix[i] = new double[y];
+			array.matrix[i] = new double[array.y];
 		}
 	}
 
-	for (int i = 0; i < y; i++)
+	for (int i = 0; i < array.y; i++)
 	{
-		for (int j = 0; j < x; j++) {
-			matrix[i][j] = rand() % 101 - 30;
+		for (int j = 0; j < array.x; j++) {
+			array.matrix[i][j] = rand() % 101 - 30;
 		}
 	}
 }
