@@ -25,9 +25,12 @@ public:
 
 	//Standart methods
 	friend void arrayInicializacing(Array &array); //Friend function
+	double sumElementsModuleHigherMainDiag();
 	void print();
 	void set(int i, int j, int new_value);
 	void arrayNoConstantInicialize();
+	void DeleteNotConstantArray();
+	friend	void DeleteArray(Array &array);
 
 	//Different solutions
 	void elementSumInPositiveStrings();
@@ -37,7 +40,7 @@ public:
 	int searchColumnWithMinimalyOnePositiveElement();
 	int searchStringWithMinimalyOnePositiveElement();
 	int compareToMiddleStringValue(double value);
-	double sumElementsModuleHigherMainDiag();
+
 };
 
 int main() {
@@ -75,7 +78,7 @@ int main() {
 	array.print();
 
 	array.searchStringWithMinimalyOnePositiveElement();	//Task 6
-
+	DeleteArray(array);
 	//==============================================================================================
 
 	cout << "Now i create new matrix." << endl;
@@ -88,6 +91,7 @@ int main() {
 	ptrarray->print();
 	ptrarray->compareToMiddleStringValue(valueForComparing);	//Task 7
 	ptrarray->sumElementsModuleHigherMainDiag();	//Task 8
+	ptrarray->DeleteNotConstantArray();
 
 	system("pause");
 	return 0;
@@ -138,6 +142,14 @@ void arrayInicializacing(Array &array)
 	}
 }
 
+void DeleteArray(Array & array)
+{
+	for (int i = 0; i < array.x; i++)
+	{
+		delete array.matrix[i];
+	}
+}
+
 void Array::print()
 {
 	if (matrix) {
@@ -177,6 +189,14 @@ void Array::arrayNoConstantInicialize()
 		for (int j = 0; j < x; j++) {
 			matrix[i][j] = rand() % 101 - 30;
 		}
+	}
+}
+
+void Array::DeleteNotConstantArray()
+{
+	for (int i = 0; i < x; i++)
+	{
+		delete matrix[i];
 	}
 }
 
